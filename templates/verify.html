@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify Application - FraudGuard Bank</title>
+</head>
+<body>
+    <h1>Identity Verification Required</h1>
+    <p>
+        Hi {{ real_user.full_name }}, we received a credit card application
+        using your identity. Did you submit this application?
+    </p>
+
+    <h3>Application Details:</h3>
+    <ul>
+        <li>Name on application: {{ application.applicant_name }}</li>
+        <li>Email on application: {{ application.applicant_email }}</li>
+        <li>Phone on application: {{ application.applicant_phone }}</li>
+        <li>Address on application: {{ application.applicant_address }}</li>
+        <li>Risk score: {{ application.risk_score }}</li>
+    </ul>
+
+    <h3>What we have on file for you:</h3>
+    <ul>
+        <li>Your email: {{ real_user.email }}</li>
+        <li>Your phone: {{ real_user.phone }}</li>
+        <li>Your address: {{ real_user.address }}</li>
+    </ul>
+
+    <form action="/verify/{{ application.verification_token }}" method="POST">
+        <button type="submit" name="decision" value="approve">
+            Yes, this was me
+        </button>
+        <button type="submit" name="decision" value="deny">
+            No, I did not apply for this
+        </button>
+    </form>
+</body>
+</html>

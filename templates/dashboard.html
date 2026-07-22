@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - FraudGuard Bank</title>
+</head>
+<body>
+    <h1>FraudGuard Bank — Admin Dashboard</h1>
+    <p>All credit card applications, most recent first.</p>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Applicant Name</th>
+                <th>Claims to be (on file)</th>
+                <th>Risk Score</th>
+                <th>Status</th>
+                <th>Verification</th>
+                <th>Submitted At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app_row in applications %}
+            <tr>
+                <td>{{ app_row.id }}</td>
+                <td>{{ app_row.applicant_name }}</td>
+                <td>{{ app_row.real_user.full_name }}</td>
+                <td>
+                    {% if app_row.risk_score >= 30 %}
+                        <span style="color: red; font-weight: bold;">{{ app_row.risk_score }}</span>
+                    {% else %}
+                        <span style="color: green;">{{ app_row.risk_score }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ app_row.status }}</td>
+                <td>{{ app_row.verification_status }}</td>
+                <td>{{ app_row.submitted_at.strftime("%Y-%m-%d %H:%M") }}</td>
+                <td>
+                    <a href="/confirmation/{{ app_row.id }}">View</a>
+                    {% if app_row.verification_status == "pending_verification" %}
+                        | <a href="/verify/{{ app_row.verification_token }}">Verify</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8">No applications yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/apply">Submit a new application</a>
+</body>
+</html>

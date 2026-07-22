@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Submitted - FraudGuard Bank</title>
+</head>
+<body>
+    <h1>Application Submitted</h1>
+    <p>Thank you, {{ application.applicant_name }}. Your application has been received.</p>
+
+    <h3>What you submitted:</h3>
+    <ul>
+        <li>Name: {{ application.applicant_name }}</li>
+        <li>Email: {{ application.applicant_email }}</li>
+        <li>Phone: {{ application.applicant_phone }}</li>
+        <li>Address: {{ application.applicant_address }}</li>
+        <li>SSN last 4: {{ application.ssn_last4_provided }}</li>
+        <li>Status: {{ application.status }}</li>
+        <li>Risk Score: {{ application.risk_score }}</li>
+    </ul>
+
+    {% if application.status == "flagged" %}
+        <h3 style="color: red;">This application has been FLAGGED for review</h3>
+        <p>Reasons:</p>
+        <ul>
+            {% for reason in reasons %}
+                <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
+        <p>
+            <strong>A verification request has been sent to the real account
+            holder's on-file email and phone.</strong> The application will not
+            proceed until they confirm it.
+        </p>
+        <p style="color: gray;">
+            (DEMO ONLY: in a real system this link would only exist inside
+            the real user's actual email/SMS inbox. For this demo, here it
+            is directly so you can simulate clicking it:
+            <a href="/verify/{{ application.verification_token }}">Verification Link</a>)
+        </p>
+    {% elif application.status == "pending" %}
+        <p style="color: green;">No major mismatches detected.</p>
+        <p>
+            As a routine security step, we still ask the real account holder
+            to confirm every new application before it's approved.
+        </p>
+        <p style="color: gray;">
+            (DEMO ONLY: in a real system this link would only exist inside
+            the real user's actual email/SMS inbox. For this demo, here it
+            is directly so you can simulate clicking it:
+            <a href="/verify/{{ application.verification_token }}">Verification Link</a>)
+        </p>
+    {% elif application.status == "approved" %}
+        <p style="color: green;">This application was confirmed by the real account holder and approved.</p>
+    {% elif application.status == "denied_fraud" %}
+        <p style="color: red;"><strong>This application was DENIED — the real account holder confirmed they did not submit it. Flagged as fraud.</strong></p>
+    {% endif %}
+
+    <a href="/apply">Submit another application</a>
+</body>
+</html>
