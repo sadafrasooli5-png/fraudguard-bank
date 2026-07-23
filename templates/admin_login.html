@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Login - FraudGuard Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="topbar">
+        <a href="/" class="brand">Fraud<span class="brand-mark">Guard</span> Bank</a>
+        <nav>
+            <a href="/apply">Apply</a>
+        </nav>
+    </div>
+
+    <div class="page" style="max-width: 420px;">
+        <div class="card">
+            <div class="eyebrow">Internal Only</div>
+            <h1>Admin Login</h1>
+
+            {% if error %}
+                <div class="notice notice-danger">{{ error }}</div>
+            {% endif %}
+
+            <form action="/admin/login" method="POST">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

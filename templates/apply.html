@@ -2,49 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Apply for a Credit Card - FraudGuard Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Credit Card Application</h1>
+    <div class="topbar">
+        <a href="/" class="brand">Fraud<span class="brand-mark">Guard</span> Bank</a>
+        <nav>
+            <a href="/apply">Apply</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </div>
 
-    <!--
-        This form sends data to the /apply route using the POST method.
-        POST means "I'm submitting data to be saved," as opposed to GET
-        which just means "give me a page to look at."
-    -->
-    <form action="/apply" method="POST">
+    <div class="page">
+        <div class="card">
+            <div class="eyebrow">New Application</div>
+            <h1>Credit Card Application</h1>
+            <p class="subdued">Fields are checked against the identity on file before this application is approved.</p>
 
-        <!--
-            For the demo, we let the applicant pick WHICH existing user
-            they're claiming to be. In real life this doesn't exist as a
-            dropdown -- the "user_id" would be figured out behind the
-            scenes by matching name/SSN/etc. We use a dropdown here only
-            so we can easily simulate different scenarios.
-        -->
-        <label for="user_id">Applying as which existing customer (for demo purposes):</label><br>
-        <select name="user_id" id="user_id" required>
-            {% for user in users %}
-                <option value="{{ user.id }}">{{ user.full_name }} ({{ user.email }})</option>
-            {% endfor %}
-        </select>
-        <br><br>
+            {% if errors %}
+            <div class="error-box">
+                <strong>Please fix the following</strong>
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
 
-        <label for="applicant_name">Full Name on Application:</label><br>
-        <input type="text" name="applicant_name" id="applicant_name" required><br><br>
+            <form action="/apply" method="POST">
+                <label for="user_id">Applying as which existing customer (demo only)</label>
+                <select name="user_id" id="user_id" required>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.full_name }} ({{ user.email }})</option>
+                    {% endfor %}
+                </select>
 
-        <label for="applicant_email">Email on Application:</label><br>
-        <input type="email" name="applicant_email" id="applicant_email" required><br><br>
+                <label for="applicant_name">Full name on application</label>
+                <input type="text" name="applicant_name" id="applicant_name"
+                       value="{{ form_data.applicant_name if form_data else '' }}" required>
 
-        <label for="applicant_phone">Phone on Application:</label><br>
-        <input type="text" name="applicant_phone" id="applicant_phone" required><br><br>
+                <label for="applicant_email">Email on application</label>
+                <input type="email" name="applicant_email" id="applicant_email"
+                       value="{{ form_data.applicant_email if form_data else '' }}" required>
 
-        <label for="applicant_address">Mailing Address on Application:</label><br>
-        <input type="text" name="applicant_address" id="applicant_address" required><br><br>
+                <label for="applicant_phone">Phone on application</label>
+                <input type="text" name="applicant_phone" id="applicant_phone"
+                       value="{{ form_data.applicant_phone if form_data else '' }}" required>
 
-        <label for="ssn_last4_provided">Last 4 of SSN Provided:</label><br>
-        <input type="text" name="ssn_last4_provided" id="ssn_last4_provided" maxlength="4" required><br><br>
+                <label for="applicant_address">Mailing address on application</label>
+                <input type="text" name="applicant_address" id="applicant_address"
+                       value="{{ form_data.applicant_address if form_data else '' }}" required>
 
-        <button type="submit">Submit Application</button>
-    </form>
+                <label for="ssn_last4_provided">Last 4 of SSN provided</label>
+                <input type="text" name="ssn_last4_provided" id="ssn_last4_provided" maxlength="4"
+                       value="{{ form_data.ssn_last4_provided if form_data else '' }}" required>
+
+                <button type="submit">Submit Application</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

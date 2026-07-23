@@ -1,0 +1,383 @@
+/* ==========================================================================
+   FraudGuard Bank — Design System
+   Concept: "Verification Ledger" — the visual language of an official bank
+   document. Navy for authority/trust, warm paper background, serif display
+   type for headings, monospace for data (risk scores, tokens, IDs) so it
+   reads as precise and auditable. Status badges are styled like ink stamps.
+   ========================================================================== */
+
+:root {
+  /* Color tokens */
+  --color-navy: #14243F;
+  --color-navy-deep: #0B1626;
+  --color-paper: #F3EFE6;
+  --color-paper-card: #FBF9F4;
+  --color-line: #DAD3C2;
+  --color-text: #1E2430;
+  --color-text-muted: #5B6472;
+  --color-trust: #2B5FA8;
+  --color-trust-deep: #1F477F;
+  --color-danger: #A8382A;
+  --color-danger-bg: #FBEAE7;
+  --color-success: #1F7A4D;
+  --color-success-bg: #E9F5EE;
+
+  /* Type tokens */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+
+  --radius: 3px;
+  --shadow-card: 0 1px 2px rgba(11, 22, 38, 0.06), 0 8px 24px rgba(11, 22, 38, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-paper);
+  /* Faint horizontal ledger lines, evoking a financial statement */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 39px,
+    var(--color-line) 39px,
+    var(--color-line) 40px
+  );
+  background-attachment: local;
+  line-height: 1.55;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background-color: var(--color-navy-deep);
+  color: var(--color-paper);
+  padding: 18px 32px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--color-trust);
+}
+
+.topbar .brand {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.topbar .brand-mark {
+  color: var(--color-trust);
+}
+
+.topbar nav a {
+  color: var(--color-paper);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-left: 22px;
+  opacity: 0.85;
+}
+
+.topbar nav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ---------- Layout ---------- */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.page.wide {
+  max-width: 1040px;
+}
+
+.card {
+  background-color: var(--color-paper-card);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 36px 40px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 0 0 8px;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin: 28px 0 10px;
+}
+
+p {
+  color: var(--color-text);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  color: var(--color-trust-deep);
+  margin-bottom: 10px;
+}
+
+.subdued {
+  color: var(--color-text-muted);
+  font-size: 0.94rem;
+}
+
+/* ---------- Forms ---------- */
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 6px;
+  margin-top: 18px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  background-color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--color-trust);
+  outline-offset: 1px;
+  border-color: var(--color-trust);
+}
+
+button,
+.btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 12px 22px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  margin-top: 26px;
+  margin-right: 10px;
+}
+
+.btn-primary,
+button[type="submit"] {
+  background-color: var(--color-trust);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover,
+button[type="submit"]:hover {
+  background-color: var(--color-trust-deep);
+}
+
+button[name="decision"][value="deny"] {
+  background-color: var(--color-danger);
+  color: #FFFFFF;
+}
+
+button[name="decision"][value="deny"]:hover {
+  background-color: #832A20;
+}
+
+.error-box {
+  background-color: var(--color-danger-bg);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 22px;
+}
+
+.error-box strong {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.error-box ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.error-box li {
+  color: var(--color-danger);
+  font-size: 0.9rem;
+}
+
+/* ---------- Data / ledger values ---------- */
+.data-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.data-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 0.94rem;
+}
+
+.data-list .label {
+  color: var(--color-text-muted);
+}
+
+.data-list .value {
+  font-family: var(--font-mono);
+  color: var(--color-text);
+}
+
+.risk-score {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.risk-score.high { color: var(--color-danger); }
+.risk-score.low { color: var(--color-success); }
+
+/* ---------- Signature element: stamp-style status badges ---------- */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  transform: rotate(-2deg);
+}
+
+.stamp-flagged {
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+}
+
+.stamp-approved {
+  color: var(--color-success);
+  background-color: var(--color-success-bg);
+}
+
+.stamp-denied {
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+}
+
+.stamp-pending {
+  color: var(--color-trust-deep);
+  background-color: #EAF1FB;
+}
+
+.stamp-neutral {
+  color: var(--color-text-muted);
+  background-color: #EEECE5;
+  transform: none;
+}
+
+/* ---------- Notices ---------- */
+.notice {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 0.92rem;
+}
+
+.notice-danger {
+  background-color: var(--color-danger-bg);
+  border-left: 4px solid var(--color-danger);
+  color: #6E241A;
+}
+
+.notice-success {
+  background-color: var(--color-success-bg);
+  border-left: 4px solid var(--color-success);
+  color: #154E31;
+}
+
+.notice-demo {
+  background-color: #EFEDE4;
+  border-left: 4px solid var(--color-text-muted);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.notice-demo a {
+  color: var(--color-trust-deep);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Table (admin dashboard) ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.88rem;
+  background-color: var(--color-paper-card);
+}
+
+thead th {
+  text-align: left;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-navy);
+  padding: 10px 12px;
+}
+
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+}
+
+tbody tr:hover {
+  background-color: #F0EEE5;
+}
+
+a {
+  color: var(--color-trust-deep);
+}
+
+.link-plain {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.link-plain:hover {
+  text-decoration: underline;
+}

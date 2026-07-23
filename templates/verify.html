@@ -2,38 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Verify Application - FraudGuard Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Identity Verification Required</h1>
-    <p>
-        Hi {{ real_user.full_name }}, we received a credit card application
-        using your identity. Did you submit this application?
-    </p>
+    <div class="topbar">
+        <a href="/" class="brand">Fraud<span class="brand-mark">Guard</span> Bank</a>
+        <nav>
+            <a href="/apply">Apply</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </div>
 
-    <h3>Application Details:</h3>
-    <ul>
-        <li>Name on application: {{ application.applicant_name }}</li>
-        <li>Email on application: {{ application.applicant_email }}</li>
-        <li>Phone on application: {{ application.applicant_phone }}</li>
-        <li>Address on application: {{ application.applicant_address }}</li>
-        <li>Risk score: {{ application.risk_score }}</li>
-    </ul>
+    <div class="page">
+        <div class="card">
+            <div class="eyebrow">Step-Up Verification</div>
+            <h1>Identity Verification Required</h1>
+            <p class="subdued">
+                Hi {{ real_user.full_name }}, we received a credit card application using
+                your identity. Did you submit this application?
+            </p>
 
-    <h3>What we have on file for you:</h3>
-    <ul>
-        <li>Your email: {{ real_user.email }}</li>
-        <li>Your phone: {{ real_user.phone }}</li>
-        <li>Your address: {{ real_user.address }}</li>
-    </ul>
+            <h3>Application details</h3>
+            <ul class="data-list">
+                <li><span class="label">Name on application</span><span class="value">{{ application.applicant_name }}</span></li>
+                <li><span class="label">Email on application</span><span class="value">{{ application.applicant_email }}</span></li>
+                <li><span class="label">Phone on application</span><span class="value">{{ application.applicant_phone }}</span></li>
+                <li><span class="label">Address on application</span><span class="value">{{ application.applicant_address }}</span></li>
+                <li><span class="label">Risk score</span><span class="value risk-score {{ 'high' if application.risk_score >= 30 else 'low' }}">{{ application.risk_score }}</span></li>
+            </ul>
 
-    <form action="/verify/{{ application.verification_token }}" method="POST">
-        <button type="submit" name="decision" value="approve">
-            Yes, this was me
-        </button>
-        <button type="submit" name="decision" value="deny">
-            No, I did not apply for this
-        </button>
-    </form>
+            <h3>What we have on file for you</h3>
+            <ul class="data-list">
+                <li><span class="label">Your email</span><span class="value">{{ real_user.email }}</span></li>
+                <li><span class="label">Your phone</span><span class="value">{{ real_user.phone }}</span></li>
+                <li><span class="label">Your address</span><span class="value">{{ real_user.address }}</span></li>
+            </ul>
+
+            <form action="/verify/{{ application.verification_token }}" method="POST">
+                <button type="submit" name="decision" value="approve">Yes, this was me</button>
+                <button type="submit" name="decision" value="deny">No, I did not apply for this</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

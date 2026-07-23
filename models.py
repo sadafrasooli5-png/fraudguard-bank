@@ -63,5 +63,14 @@ class CreditApplication(db.Model):
     # has confirmed or denied that THEY submitted this application.
     verification_token = db.Column(db.String(64), nullable=True)
     verification_status = db.Column(db.String(20), default="not_required")
+
+    # SECURITY FIX (IDOR): confirmation pages used to be looked up by the
+    # sequential integer 'id' (e.g. /confirmation/1, /confirmation/2...).
+    # That let anyone view ANY application -- including other people's
+    # submitted SSNs and addresses -- just by changing the number in the
+    # URL. This unguessable token replaces the id for lookups, the same
+    # pattern already used for verification_token.
+    confirmation_token = db.Column(db.String(64), nullable=True)
+
     def __repr__(self):
         return f"<CreditApplication {self.applicant_name} - {self.status}>"

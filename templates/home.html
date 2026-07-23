@@ -2,10 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FraudGuard Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to FraudGuard Bank</h1>
-    <p>This is the starting point of our fraud detection demo.</p>
+    <div class="topbar">
+        <a href="/" class="brand">Fraud<span class="brand-mark">Guard</span> Bank</a>
+        <nav>
+            <a href="/apply">Apply</a>
+            <a href="/admin">Admin</a>
+        </nav>
+    </div>
+
+    <div class="page">
+        <div class="card">
+            <div class="eyebrow">Identity Verification Demo</div>
+            <h1>Welcome to FraudGuard Bank</h1>
+            <p class="subdued">
+                A working simulation of how credit card fraud gets through — and how
+                step-up verification, tied to a customer's real on-file contact
+                information, can stop it before it reaches production.
+            </p>
+            <a href="/apply" class="btn btn-primary" style="text-decoration:none; display:inline-block;">Submit an Application</a>
+            <a href="/admin" class="btn" style="text-decoration:none; display:inline-block; background:#EFEDE4; color:#1E2430;">View Admin Dashboard</a>
+        </div>
+    </div>
 </body>
 </html>
